@@ -14,20 +14,23 @@ import java.sql.SQLException;
  * @author Anderson
  */
 public class Conecta_Banco {
-    Connection con = null;
+    Connection conn = null;
     String url = "jdbc:mysql://localhost:3306/";
     String usuario = "root"; 
     String senha = "1020";
     
-    public Connection conectaMySql(String nameDB) throws SQLException {
+    public Connection conectaMySql(String nameDB) throws SQLException, ClassNotFoundException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url+nameDB, usuario, senha);
+            conn = DriverManager.getConnection(url+nameDB, usuario, senha);
+            return conn;
         }catch(SQLException e) {
-            System.out.println("Caminho, usuario ou senha invalido");
+            
+            throw new SQLException("Caminho, usuario ou senha invalido", e);
         }catch(ClassNotFoundException x) {
-            System.out.println("Driver nãa encontrado");
+           
+            throw new ClassNotFoundException("Driver nãa encontrado", x);
         }
-        return con;
+        
     }   
 }

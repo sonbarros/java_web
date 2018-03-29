@@ -6,11 +6,24 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Cad Cliente</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <h4>Cadastro de Cliente</h4>
+        
+        <form action="formlogin.jsp" method="post">
+        <label for="nome">Nome:</label>
+        <input id="nome" name="nome" type="text" size="25" maxlength="15"	 />
+        
+        <label for="email">Email</label>
+        <input id="email" name="pass" type="email" size="25" maxlength="10" />
+        
+        <label for="telefone">Telefone</label>
+        <input id="telefone" name="telefone" type="tel" size="11" maxlength="10" />
+        
+        <input type="submit" value="Enviar">
+        </form>
     </body>
 </html>

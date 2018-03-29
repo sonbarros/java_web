@@ -1,13 +1,15 @@
 <%-- 
     Document   : formlogin
     Created on : 29/03/2018, 00:03:25
-    Author     : Anderson
+    Author     : Anderson S Barros
 --%>
 
 <%@page import="java.sql.Statement"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="Controle.Conecta_Banco"%>
+
+<%@page import="java.sql.SQLException"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,33 +17,31 @@
         <title>Login</title>
     </head>
     <body>
-        <%
-            Conecta_Banco conecta_Banco = new Conecta_Banco();
-            Connection conn = conecta_Banco.conectaMySql("biblia");
+        <%  
+            String nomeCli = request.getParameter("nome");
+            String telCli = request.getParameter("telefone");
+            String emailCli = request.getParameter("email");
+            //out.println("<h6>"+nomeCli+"</h6>");
             
-            if(conn != null) {
-                out.println("Conectado");
-            }else {
-                out.println("Não Conectado");
-            }
+            try {
+                Conecta_Banco conecta_Banco = new Conecta_Banco();
+                Connection conn = conecta_Banco.conectaMySql("faculdade");
+                Statement stmt = conn.createStatement();
+                Number num = stmt.executeUpdate("INSERT INTO discipulos(nome) VALUES ('MATHEUS')");
+                stmt.close();
+                out.println(num);
             
-            Statement stmt = conn.createStatement();
-            Number num = stmt.executeUpdate("INSERT INTO discipulos(nome) VALUES ('MATHEUS')");
-            stmt.close();
-            out.println(num);
-            
-            conn.close();
+                conn.close();
+                
+            }catch(SQLException e) {
+                out.println(e.getMessage());
+            }catch(ClassNotFoundException e) {
+                out.println(e.getMessage());
+            }   
+
             
         %>
-        <h1>Informe login e senha</h1>
-        <form action="formlogin.jsp">
-            <label for="nome">Nome:</label>
-            <input id="nome" name="user" type="text" size="15" maxlength="15"	 />
-
-            <label for="senha">Senhas:</label>
-            <input id="senha" name="pass" type="password" size="15" maxlength="10" />
-            
-            <input type="submit" value="enviar" />
-        </form>
+        <h1>Pagina JSP</h1>
+        
     </body>
 </html>
