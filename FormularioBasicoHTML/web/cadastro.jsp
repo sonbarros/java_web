@@ -4,12 +4,11 @@
     Author     : Anderson S Barros
 --%>
 
-<%@page import="java.sql.Statement"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="Controle.Conecta_Banco"%>
-
+<%@page import="Controle.DatabaseConnection"%>
 <%@page import="java.sql.SQLException"%>
+<%@page import="Controle.CadastroFalhaException"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,24 +23,19 @@
             //out.println("<h6>"+nomeCli+"</h6>");
             
             try {
-                Conecta_Banco conecta_Banco = new Conecta_Banco();
-                Connection conn = conecta_Banco.conectaMySql("faculdade");
-                Statement stmt = conn.createStatement();
-                Number num = stmt.executeUpdate("INSERT INTO discipulos(nome) VALUES ('MATHEUS')");
-                stmt.close();
-                out.println(num);
-            
-                conn.close();
-                
+                DatabaseConnection databaseConnection = new DatabaseConnection();
+                databaseConnection.registerClient(nomeCli, telCli, emailCli);
+                out.println("Cadastro Realizado com Sucesso!!"); 
             }catch(SQLException e) {
                 out.println(e.getMessage());
             }catch(ClassNotFoundException e) {
                 out.println(e.getMessage());
-            }   
+            }catch(CadastroFalhaException e) {
+                out.println(e.getMessage());
+            }  
 
             
         %>
-        <h1>Pagina JSP</h1>
         
     </body>
 </html>
