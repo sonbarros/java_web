@@ -1,27 +1,22 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
-        <title>Cad Cliente</title>
+        <title>Cadastro de Cliente</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <h4>Cadastro de Cliente</h4>
         
-        <form action="formlogin.jsp" method="post">
+        <form action="cadastro.jsp" method="post">
         <label for="nome">Nome:</label>
-        <input id="nome" name="nome" type="text" size="25" maxlength="15"	 />
+        <input id="nome" name="nome" type="text" size="25" maxlength="60" required="" />
         
         <label for="email">Email</label>
-        <input id="email" name="pass" type="email" size="25" maxlength="10" />
+        <input id="email" name="email" type="email" size="25" maxlength="60" required=""/>
         
         <label for="telefone">Telefone</label>
-        <input id="telefone" name="telefone" type="tel" size="11" maxlength="10" />
+        <input id="telefone" name="telefone" type="tel" size="11" maxlength="12" />
         
         <input type="submit" value="Enviar">
         </form>

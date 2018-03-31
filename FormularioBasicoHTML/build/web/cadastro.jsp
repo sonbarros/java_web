@@ -1,5 +1,5 @@
 <%-- 
-    Document   : formlogin
+    Document   : cadastro
     Created on : 29/03/2018, 00:03:25
     Author     : Anderson S Barros
 --%>
@@ -20,12 +20,18 @@
             String nomeCli = request.getParameter("nome");
             String telCli = request.getParameter("telefone");
             String emailCli = request.getParameter("email");
-            //out.println("<h6>"+nomeCli+"</h6>");
-            
+               
             try {
                 DatabaseConnection databaseConnection = new DatabaseConnection();
-                databaseConnection.registerClient(nomeCli, telCli, emailCli);
-                out.println("Cadastro Realizado com Sucesso!!"); 
+                int codClient = databaseConnection.registerClient(nomeCli, telCli, emailCli);
+                out.print("Cadastro Realizado com Sucesso!! <br><br>");
+                
+                out.print(
+                    "Código Cliente: " + codClient + "<br>" +
+                    "Nome: " + nomeCli + "<br>" +
+                    "Telefone: " + telCli + "<br>" +
+                    "E-mail: " + emailCli + "<br>"
+                               );
             }catch(SQLException e) {
                 out.println(e.getMessage());
             }catch(ClassNotFoundException e) {
