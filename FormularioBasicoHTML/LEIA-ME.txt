@@ -1,0 +1,20 @@
+Descrição do projeto:
+
+Este projeto é um formulário em HTML (index.html) que fará o cadastro de clientes 
+e armazenará no Banco de Dados  MYSQL: código , nome,  telefone e email. 
+Em outra página em JSP, recebe esses dados (via POST) e  adiciona os dados em banco de dados.
+
+O back-end é implementado utilizado a linguagem java, observe no arquivo cadastro.jsp que
+o conteúdo em java esta entre as TAGs <% %>. Dentro desse arquivo (cadastro.jsp) eu realizo
+O importe dos arquivos .java, onde estão localizados as minhas classes customizadas para 
+acesso ao banco de dados.
+
+Localização dos arquivos:
+
+index.html  :  web/index.html
+cadastro.jsp  :  web/cadastro.jsp
+DatabaseConnection.java  :  src/java/Controle/DatabaseConnection.java 
+CadastroFalhaException.java  :  src/java/Controle/CadastroFalhaException.java (Exceção customizada para trabalhar com try/catch)
+
+
+

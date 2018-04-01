@@ -14,7 +14,7 @@ import java.sql.ResultSet;
  * @e-mail anderson21br@gmail.com
  */
 public class DatabaseConnection {
-    Connection conn = null;
+    
     String url = "jdbc:mysql://localhost:3306/";
     String usuario = "root"; 
     String senha = "";
@@ -22,7 +22,7 @@ public class DatabaseConnection {
     private Connection openConnection(String nameDB) throws SQLException, ClassNotFoundException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(url+nameDB, usuario, senha);
+            Connection conn = DriverManager.getConnection(url+nameDB, usuario, senha);
             return conn;
         }catch(SQLException e) {
             
@@ -35,46 +35,45 @@ public class DatabaseConnection {
     }
     
     public int registerClient(String nome, String telefone, String email) throws SQLException, ClassNotFoundException, CadastroFalhaException {
-       
-            
-            this.openConnection("faculdade");
+        
+            Connection conn = this.openConnection("faculdade");
             Statement stmt = conn.createStatement();
             Number num = stmt.executeUpdate("INSERT INTO cliente(nome, telefone, email) VALUES ('"+ nome +"', '"+ telefone +"', '"+ email + "')");
-            stmt.close();
-            
-            int codCli = this.getCodClient(nome);
-                    
+            stmt.close();     
             conn.close();
             
             if(!num.equals(1)) {
                 throw new CadastroFalhaException(nome);
             }
             
-            return codCli;
+            return this.getCodClient(nome);
     }
     
-    private int getCodClient(String nome) throws SQLException {
+    private int getCodClient(String nome) throws SQLException, ClassNotFoundException {
         
         String firstName;
+        /* Esse if: para separar o primeiro nome do ultimo nome,
+         * caso tenhamos String nomes sem espaços, posso considerar que
+         * foi informado apenas o primeiro nome.
+         * O select pegará o ultimo id para o primeiro nome
+         */
         if(nome.indexOf(' ') == -1) {
             firstName = nome;
         }else {
             firstName = nome.substring(0, nome.indexOf(' '));
         }
         
-        PreparedStatement pstmt = this.conn.prepareStatement("SELECT id FROM cliente WHERE nome LIKE '"+ firstName +"%' ORDER BY ID DESC LIMIT 1");
+        Connection conn = this.openConnection("faculdade");
+        PreparedStatement pstmt = conn.prepareStatement("SELECT id FROM cliente WHERE nome LIKE '"+ firstName +"%' ORDER BY ID DESC LIMIT 1");
         ResultSet rs = pstmt.executeQuery();
         rs.next();
         int id = rs.getInt("id");
         
         pstmt.close();
         rs.close();
+        conn.close();
         
-        return id;
-        
-        /* para chamar esse metodo você deve considerar que a conexao com
-           o banco deve estar aberta
-        */    
+        return id;   
     }
     
 }
